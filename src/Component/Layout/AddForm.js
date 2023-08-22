@@ -1,31 +1,33 @@
-import React, { useRef, useState } from "react";
-const AddForm=(props)=>{
-   const [amountIsValid , setAmountIsValid] = useState(true)
-   const amountInputRef = useRef()
-    const submitHandler =(event) =>{
-      event.preventDefault();
+import React, { useRef } from "react";
 
-      const enteredAmount = amountInputRef.current.value;
-      const enteredAmountNumber = +enteredAmount;
-      if(enteredAmount.trim().length===0 || enteredAmountNumber < 1 || enteredAmountNumber >5)
-      {
-         setAmountIsValid(false)
-         setTimeout(()=>{
-            setAmountIsValid(true)
-         },3000)
-         return
-      }
-      props.onAddToCart(enteredAmountNumber)
+const AddForm = (props) => {
+  const amountInputRef = useRef(null);
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    const enteredAmount = +amountInputRef.current.value;
+
+    if (enteredAmount > 0 && enteredAmount <= 10) {
+      props.addToCart(enteredAmount);
+    } else {
+      alert("Please enter a valid quantity between 1 and 10");
     }
-   return(
-    <div className="amount-container">
-      <div className="label" >
-         <label>Add quantity</label>
-         <input type="number" min={1} max={5} step={1} ref={amountInputRef}/><br/>
-      </div>
-         <button className="add" onClick={submitHandler}> Add</button>
-         {!amountIsValid && <p>Please enter a valid amount number (1-5).</p>}
-    </div>
-   )
+  }
+
+  return (
+    <form onSubmit={submitHandler}>
+      <label htmlFor="quantity">Add Quantity</label>
+      <input
+        type="number"
+        min={1}
+        max={10}
+        id="quantity"
+        step={1}
+        ref={amountInputRef}
+      />
+      <button type="submit">Add</button>
+    </form>
+  );
 }
+
 export default AddForm;

@@ -18,7 +18,6 @@ function App() {
     setCartVisible(false)
   }
 
-
   // Function to add a new product to the list
   const addProductToList = (newProduct) => {
     setListItem([...ListItems, newProduct]);
@@ -26,7 +25,7 @@ function App() {
   return (
     <CartProvider>
       <AddItems onShowCart={showCart} addProductToList={addProductToList} />
-      <AddList ListItems={ListItems}/>
+      <AddList  ListItems={ListItems}/>
       {cartVisible && <Cart onClose = {HideCart}/>}
     </CartProvider>
   );

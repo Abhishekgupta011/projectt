@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import Modal from "../UI/Modal";
-import CartContext from "../Context/CartContext";
 import CartList from "./CartList";
+import CartContext from "../Context/CartContext";
+import Modal from "../UI/Modal";
 
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
-  const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
+  const totalAmount = `$${cartCtx.totalAmount}`;
   const hasItems = cartCtx.items.length > 0;
 
   const addItemsHandler = (item) => {
@@ -19,7 +19,7 @@ const Cart = (props) => {
   const deleteItemHandler = (id) =>{
     cartCtx.deleteItem(id)
   }
-
+  
   const cartItemsList = cartCtx.items.map((item) => (
     <CartList
       key={item.id}
@@ -30,8 +30,10 @@ const Cart = (props) => {
       onRemove={removeItemsHandler.bind(null, item.id)} // Use arrow function to pass the id
       onDelete = {deleteItemHandler.bind(null, item.id)}
     />
+    
   ));
-
+  
+  console.log("Cart Items:", cartCtx.items);
   return (
     <Modal onClose={props.onClose}>
       <ul className="cartItems">{cartItemsList}</ul>

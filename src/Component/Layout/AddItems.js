@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import CartButton from "./CartButton";
+import { v4 as uuidv4 } from 'uuid';
 
-const AddItems = ({addProductToList,onShowCart}) =>{
+const AddItems = (props) =>{
     const [medicine , setMedicine] = useState('')
     const [description , setDescription] = useState('')
     const [price , setPrice] = useState('')
@@ -17,13 +18,14 @@ const AddItems = ({addProductToList,onShowCart}) =>{
     const addProductHandler = () => {
         // Create a new product object
         const newProduct = {
+          id : uuidv4(),
           name: medicine,
           description: description,
           price: parseFloat(price),
         };
     
         // Call the function from props to add the new product
-        addProductToList(newProduct);
+        props.addProductToList(newProduct);
     
         // Clear the input fields
         setMedicine("");
@@ -54,7 +56,7 @@ const AddItems = ({addProductToList,onShowCart}) =>{
                 value={price}
                 />
             <button onClick={addProductHandler}>Add Product</button>
-            <CartButton onClick={onShowCart}/>
+            <CartButton onClick={props.onShowCart}/>
         </div>
     )
 }
